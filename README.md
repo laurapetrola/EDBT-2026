@@ -19,6 +19,10 @@ The system is modular and locally executable — all processing happens on your 
 ---
 
 ##  Architecture
+>  **Note:**  
+> This version of the system is implemented for **PostgreSQL**.  
+> For copyright and licensing reasons, the original implementation that interacted with a **commercial database** is **not included** here.
+
 ```text
 +-------------------------------------------------------------+
 |                          User Input                         |
