@@ -1,11 +1,11 @@
-# 🧠 Athena Local SQL Agent
+#  Athena Local SQL Agent
 
 An intelligent **text-to-SQL agent** that connects natural language queries to a **PostgreSQL database**, automatically generates and executes optimized SQL queries, and suggests **index optimizations** using DeepSeek's LLM API.  
 It also integrates a **semantic retriever** for query similarity (`close_query_select.py`), allowing the model to learn from example SQL statements (`examples.json`).
 
 ---
 
-## 📋 Overview
+##  Overview
 
 This project demonstrates a **local AI agent** capable of:
 - Translating natural language questions into **PostgreSQL SQL queries**
@@ -18,16 +18,17 @@ The system is modular and locally executable — all processing happens on your 
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
+```text
 +-------------------------------------------------------------+
 |                          User Input                         |
-|            e.g., "Show customers with the highest orders"    |
+|            e.g., "Show customers with the highest orders"   |
 +-------------------------------------------------------------+
                                |
                                v
 +----------------------+    +---------------------------+
 | close_query_select.py|    |   agent.py (Main Logic)   |
-|  - Builds embeddings |--> | - Generates SQL (DeepSeek)|
+|  - Builds embeddings |--->| - Generates SQL (DeepSeek)|
 |  - Finds similar SQL |    | - Executes & times query  |
 |  - Uses FAISS index  |    | - Suggests indexes        |
 +----------------------+    | - Applies improvements    |
@@ -37,7 +38,7 @@ The system is modular and locally executable — all processing happens on your 
                         +-------------------+
                         | PostgreSQL (TPC-H)|
                         +-------------------+
-
+```
 
 ### Main Components:
 - **`agent.py`** — Orchestrates the pipeline:
@@ -55,7 +56,7 @@ The system is modular and locally executable — all processing happens on your 
 
 ---
 
-## ⚙️ Setup
+##  Setup
 
 ### 1. Requirements
 Ensure you have:
@@ -65,7 +66,7 @@ Ensure you have:
 
 ---
 
-### 2. Installation
+## Installation
 
 #### Create and activate a virtual environment
 ```bash
@@ -96,7 +97,7 @@ DB_PASSWORD=yourpassword
 DB_DATABASE=tpc_h_sf10
 ```
 
-### 3. Dataset
+## Dataset
 This project is designed to work with TPC-H Scale Factor 10, a standard decision support benchmark. (You could also try others, but the embeddings are tuned for TPC-H.)
 You can generate it using the [TPC-H Benchmark Tool](https://www.tpc.org/tpch/)
 
@@ -108,7 +109,7 @@ psql -U postgres -d tpc_h_sf10 -f dss.ddl
 
 Ensure the tables are accessible under your configured database.
 
-### 4. Running the Application
+## Running the Application
 Run the interactive agent locally:
 ```
 python agent.py
@@ -134,7 +135,7 @@ The agent will:
 5. Suggest indexes if beneficial
 6. Re-run query and compare runtime
 
-### 5. Embeddings (Few-Shot Retrieval)
+## Embeddings (Few-Shot Retrieval)
 The module ```close_query_select.py``` builds semantic embeddings using SentenceTransformer (all-MiniLM-L6-v2) and FAISS:
 
 * ```examples.json``` stores reference (question → SQL) mappings.
@@ -143,7 +144,7 @@ The module ```close_query_select.py``` builds semantic embeddings using Sentence
 
 This allows the model to learn from previous examples without re-training.
 
-### 6. Example Interaction
+## Example Interaction
 Input:
 ```
 Enter your question: Show supplier id and name for suppliers from nation key 15, and include the nation name.
@@ -162,7 +163,7 @@ Re-executed with indexes in 0.2175 seconds.
 Speedup: 1.57× (36.4% improvement)
 
 ```
-### 7. Files Summary
+## Files Summary
 | File | Description |
 |------|--------------|
 | `.env-EXAMPLE` | Example environment configuration |
@@ -170,14 +171,17 @@ Speedup: 1.57× (36.4% improvement)
 | `close_query_select.py` | Embeddings and FAISS index builder |
 | `examples.json` | Example (question, SQL) pairs for few-shot retrieval |
 | `requirements.txt` | Python dependencies for environment setup |
-### 8. Notes
+
+## Notes
 * The DeepSeek API is a paid service. You must obtain an API key to use the model.
 * All query execution and index creation happen locally on your PostgreSQL database.
 * The agent modifies the database by creating and dropping indexes to test optimizations — use a development/test environment, not production.
-### 9. License
+  
+## License
 This project is distributed for educational and research purposes.
 Feel free to modify and extend it for local experimentation.
-### 10. Future Improvements
+
+## Future Improvements
 * Support for multiple LLM providers (e.g., OpenAI, Anthropic)
 * Integration with pg_stat_statements for deeper profiling
 * Persistent index performance tracking
