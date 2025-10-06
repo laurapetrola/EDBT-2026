@@ -64,7 +64,7 @@ The system is modular and locally executable — all processing happens on your 
 
 ### 1. Requirements
 Ensure you have:
-- Python **3.10**
+- Python **3.12**
 - PostgreSQL **with TPC-H dataset (scale factor 10)**
 - A **DeepSeek API key** (paid, via [deepseek.com](https://deepseek.com))
 
@@ -74,7 +74,7 @@ Ensure you have:
 
 #### Create and activate a virtual environment
 ```bash
-python3.10 -m venv venv
+python3 -m venv venv
 source venv/bin/activate        # On Windows: venv\Scripts\activate
 ```
 
