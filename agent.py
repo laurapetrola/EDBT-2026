@@ -1089,8 +1089,8 @@ def run_agent(question, few_args, state=None):
 
 # Main loop for the agent
 if __name__ == "__main__":
-    print("📊 Database SQL Agent (type 'exit' to quit, 'refresh schema' to reload schema)")
-    print(f"✅ Connected to database: {db_database} in {dialect_name}")
+    print("Database SQL Agent (type 'exit' to quit, 'refresh schema' to reload schema)")
+    print(f"Connected to database: {db_database} in {dialect_name}")
     retriever = SQLQueryRetriever(model_name='all-MiniLM-L6-v2')
     retriever.carregar_json('examples.json')
     retriever.construir_index()
@@ -1105,13 +1105,13 @@ if __name__ == "__main__":
         few_args = retriever.buscar_filtrado(question, top_k=2, threshold=0.5)
 
         if question.lower() in ['exit', 'quit']:
-            print("👋 Goodbye!")
+            print("Goodbye!")
             break
 
         if question.lower() == 'refresh schema':
             get_db_schema.cache_clear()
             agent_state["db_schema"] = get_db_schema()
-            print("[INFO] ✅ Schema cache cleared and reloaded.")
+            print("[INFO]  Schema cache cleared and reloaded.")
             continue
 
         try:
@@ -1124,7 +1124,7 @@ if __name__ == "__main__":
 
             # Answer
             if agent_state.get("answer"):
-                print("\n📢 Answer:\n" + agent_state["answer"])
+                print("\n Answer:\n" + agent_state["answer"])
 
             # If indexes were suggested, run_agent already created them and re-ran the query.
             created = agent_state.get("created_indexes") or []
@@ -1147,7 +1147,7 @@ if __name__ == "__main__":
                         impr = (before - after) / before * 100.0
                         agent_state["runtime_improvement_pct"] = impr  # persist
 
-                    print("\n⏱️ Runtime:")
+                    print("\n Runtime:")
                     print(f"- Before: {before:.4f} s")
                     print(f"- After : {after:.4f} s")
                     print(f"- Delta : {delta:+.4f} s")
