@@ -80,6 +80,9 @@ source venv/bin/activate        # On Windows: venv\Scripts\activate
 
 #### Install dependencies
 ```bash
+ setup-system.sh
+```
+```bash
 pip install -r requirements.txt
 ```
 #### Environment Configuration
