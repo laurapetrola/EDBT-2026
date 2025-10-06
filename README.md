@@ -20,23 +20,23 @@ The system is modular and locally executable — all processing happens on your 
 
 ## 🏗️ Architecture
 +-------------------------------------------------------------+
-| User Input |
-| e.g., "Show customers with the highest orders" |
+|                          User Input                         |
+|            e.g., "Show customers with the highest orders"    |
 +-------------------------------------------------------------+
-|
-v
-+----------------------+ +---------------------------+
-| close_query_select.py| | agent.py (Main Logic) |
-| - Builds embeddings |--> | - Generates SQL (DeepSeek)|
-| - Finds similar SQL | | - Executes & times query |
-| - Uses FAISS index | | - Suggests indexes |
-+----------------------+ | - Applies improvements |
-+---------------------------+
-|
-v
-+-------------------+
-| PostgreSQL (TPC-H)|
-+-------------------+
+                               |
+                               v
++----------------------+    +---------------------------+
+| close_query_select.py|    |   agent.py (Main Logic)   |
+|  - Builds embeddings |--> | - Generates SQL (DeepSeek)|
+|  - Finds similar SQL |    | - Executes & times query  |
+|  - Uses FAISS index  |    | - Suggests indexes        |
++----------------------+    | - Applies improvements    |
+                            +---------------------------+
+                               |
+                               v
+                        +-------------------+
+                        | PostgreSQL (TPC-H)|
+                        +-------------------+
 
 
 ### Main Components:
